@@ -1,15 +1,46 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: "/",
       name: "home",
-      component: Home
+      component: resolve => require(['./views/Home.vue'], resolve),
+      children: [
+        
+      ]
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: resolve => require(['./views/categories.vue'], resolve),
+    },
+    {
+      path: '/rank',
+      name: 'rank',
+      component: resolve => require(['./views/rank.vue'], resolve)
+
+    },
+    {
+      path: '/bookDetail',
+      name: 'bookDetail',
+      component: resolve => require(['./views/bookDetail.vue'], resolve)
+
+    },
+    {
+      path: '/chapter',
+      name: 'chapter',
+      component: resolve => require(['./views/chapter.vue'], resolve)
+
+    },
+    {
+      path: '/book',
+      name: 'book',
+      component: resolve => require(['./views/book.vue'], resolve)
+
     },
     {
       path: "/about",

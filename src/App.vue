@@ -1,29 +1,41 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+   
+      <router-view class="child-view"/>
+
+    <!-- <input @change="changeSkin" v-model="skin" type='color'/> -->
   </div>
 </template>
-
+<script>
+export default {
+  // beforeRouteUpdate(to, from, next) {
+  //   const toDepth = to.path.split("/").length;
+  //   const fromDepth = from.path.split("/").length;
+  //   this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+  //   next();
+  // },
+  name: "app",
+  data() {
+    return {
+      skin: "",
+      
+    };
+  },
+  methods: {}
+};
+</script>
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  padding: 0;
+  margin: 0;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.container {
+  padding: 0 15px;
 }
+:root {
+  --theme-font-color: #000;
+  --theme-background-color: #fff;
+  --theme-color: green;
+}
+
 </style>
