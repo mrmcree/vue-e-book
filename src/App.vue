@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-   
-      <router-view class="child-view"/>
+    <router-view class="child-view" />
 
     <!-- <input @change="changeSkin" v-model="skin" type='color'/> -->
   </div>
@@ -17,8 +16,7 @@ export default {
   name: "app",
   data() {
     return {
-      skin: "",
-      
+      skin: ""
     };
   },
   methods: {}
@@ -37,5 +35,4 @@ export default {
   --theme-background-color: #fff;
   --theme-color: green;
 }
-
 </style>

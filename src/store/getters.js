@@ -1,1 +1,1 @@
-export const start=state=>state.start
+export const start = state => state.start;

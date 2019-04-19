@@ -1,3 +1,3 @@
-module.exports={
-    baseURL:'http://www.zhuishushenqi.com/'
-}
+module.exports = {
+  baseURL: "http://www.zhuishushenqi.com/"
+};

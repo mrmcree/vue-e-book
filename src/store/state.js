@@ -1,3 +1,3 @@
-export default{
-    start:0
-}
+export default {
+  start: 0
+};

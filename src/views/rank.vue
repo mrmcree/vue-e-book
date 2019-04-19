@@ -1,28 +1,46 @@
 <template>
   <div id="rank">
     <div class="container">
-    <h2 v-show='male.length>0'>male</h2>
-    <ul class="item-wrapper">
-      <li class="item" v-for="(item,index) in male" :key="index">
-        <router-link :to="{path:'/categories',query:{major:item.major,type:'male',name:item.name}}">
-          <img class="bookCover" v-lazy="decodeURIComponent(item.cover)" alt>
-        </router-link>
-        <div class="title" v-html="item.name"></div>
-        <!-- <div class="count" v-html="item.bookCount"></div>
+      <h2 v-show="male.length > 0">male</h2>
+      <ul class="item-wrapper">
+        <li class="item" v-for="(item, index) in male" :key="index">
+          <router-link
+            :to="{
+              path: '/categories',
+              query: { major: item.major, type: 'male', name: item.name }
+            }"
+          >
+            <img
+              class="bookCover"
+              v-lazy="decodeURIComponent(item.cover)"
+              alt
+            />
+          </router-link>
+          <div class="title" v-html="item.name"></div>
+          <!-- <div class="count" v-html="item.bookCount"></div>
         <div class="monthlyCount" v-html="'月票'+item.monthlyCount"></div>-->
-      </li>
-    </ul>
-    <h2 v-show='female.length>0'>female</h2>
-    <ul class="item-wrapper">
-      <li class="item" v-for="(item,index) in female" :key="index">
-        <router-link :to="{path:'/categories',query:{major:item.major,type:'female',name:item.name}}">
-          <img class="bookCover" v-lazy="decodeURIComponent(item.cover)" alt>
-        </router-link>
-        <div class="title" v-html="item.name"></div>
-        <!-- <div class="count" v-html="item.bookCount"></div>
+        </li>
+      </ul>
+      <h2 v-show="female.length > 0">female</h2>
+      <ul class="item-wrapper">
+        <li class="item" v-for="(item, index) in female" :key="index">
+          <router-link
+            :to="{
+              path: '/categories',
+              query: { major: item.major, type: 'female', name: item.name }
+            }"
+          >
+            <img
+              class="bookCover"
+              v-lazy="decodeURIComponent(item.cover)"
+              alt
+            />
+          </router-link>
+          <div class="title" v-html="item.name"></div>
+          <!-- <div class="count" v-html="item.bookCount"></div>
         <div class="monthlyCount" v-html="'月票'+item.monthlyCount"></div>-->
-      </li>
-    </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -43,14 +61,14 @@ export default {
     });
     this.$http.get(`${this.$host}category`).then(response => {
       Indicator.close();
-      console.log(response);
+      // console.log(response);
       this.female = response.data.female;
       this.male = response.data.male;
     });
   }
 };
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 ul,
 li {
   list-style: none;

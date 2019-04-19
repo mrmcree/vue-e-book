@@ -8,13 +8,13 @@
     </mt-header>
     <div class="container">
       <ul class="books">
-        <li class="book" v-for="(item,index) in books" :key="index">
-          <router-link :to="{path:'/bookDetail',query:{id:item.id}}">
+        <li class="book" v-for="(item, index) in books" :key="index">
+          <router-link :to="{ path: '/bookDetail', query: { id: item.id } }">
             <img
               v-lazy="decodeURIComponent(item.cover)"
               class="cover"
               :key="decodeURIComponent(item.cover)"
-            >
+            />
           </router-link>
           <div class="book-right">
             <div class="title" v-text="item.title"></div>
@@ -26,10 +26,14 @@
           </div>
         </li>
       </ul>
-      <div class="footer" v-show="books.length>0">
-        <mt-button type="primary" class="btn" size="small" @click="prev">上一页</mt-button>
-        <div class="pageNum">{{page}}</div>
-        <mt-button type="primary" class="btn" size="small" @click="next">下一页</mt-button>
+      <div class="footer" v-show="books.length > 0">
+        <mt-button type="primary" class="btn" size="small" @click="prev"
+          >上一页</mt-button
+        >
+        <div class="pageNum">{{ page }}</div>
+        <mt-button type="primary" class="btn" size="small" @click="next"
+          >下一页</mt-button
+        >
       </div>
     </div>
   </div>
@@ -57,15 +61,15 @@ export default {
         this.page = 1;
       }
       this.getData(this.page);
-      console.log(this.books);
+      // console.log(this.books);
     },
     getData(page = 1) {
       Indicator.open({
         text: "加载中...",
         spinnerType: "fading-circle"
       });
-      let {major,type} = this.$route.query;
-      name = this.$route.query.name;
+      let { major, type } = this.$route.query;
+      this.name = this.$route.query.name;
       this.$http
         .get(
           `${
@@ -85,7 +89,7 @@ export default {
 };
 </script>
 <!-- */es-lint disable */ -->
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .categories {
   .container {
     padding-top: 20px;
@@ -105,7 +109,6 @@ export default {
       font-size: 14px;
       color: var(--theme-font-color);
       background-color: var(--theme-background-color);
-      
     }
     .pageNum {
       color: red;

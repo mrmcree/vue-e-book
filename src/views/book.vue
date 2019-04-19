@@ -5,18 +5,21 @@
         <div class="title" v-text="book.title"></div>
         <div class="chapter" v-text="book.chapter"></div>
       </div>
-      <div class="content" ref="content" v-html="book.content" @click="toolBarShow=true"></div>
+      <div
+        class="content"
+        ref="content"
+        v-html="book.content"
+        @click="toolBarShow = true"
+      ></div>
     </div>
-    <div class="toolBar" v-show='toolBarShow'>
+    <div class="toolBar" v-show="toolBarShow">
       <mt-header :title="book.title" class="header">
-      <div @click="$router.go(-1)" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </div>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
-    <div class="space" @click="toolBarShow=false">
-
-    </div>
+        <div @click="$router.go(-1)" slot="left">
+          <mt-button icon="back">返回</mt-button>
+        </div>
+        <mt-button icon="more" slot="right"></mt-button>
+      </mt-header>
+      <div class="space" @click="toolBarShow = false"></div>
       <div class="footer">
         <!-- <input type="color" @change="changeFontSkin" v-model="fontColor">
         <input type="color" @change="changeBgSkin" v-model="bgColor">-->
@@ -33,9 +36,13 @@
           <div slot="end">&nbsp;&nbsp;AA</div>
         </mt-range>
         <div class="chapter-select">
-          <mt-button type="primary" class="btn" size="small" @click="prev">上一章</mt-button>
-          <div class="pageNum">{{book.chapter}}</div>
-          <mt-button type="primary" class="btn" size="small" @click="next">下一章</mt-button>
+          <mt-button type="primary" class="btn" size="small" @click="prev"
+            >上一章</mt-button
+          >
+          <div class="pageNum">{{ book.chapter }}</div>
+          <mt-button type="primary" class="btn" size="small" @click="next"
+            >下一章</mt-button
+          >
         </div>
       </div>
     </div>
@@ -53,30 +60,29 @@ export default {
       lineHeight: 12,
       letterSpacing: "0px",
       fontSize: 12,
-      toolBarShow:false
+      toolBarShow: false
     };
   },
-  watch:{
-    fontSize(newVal,oldVal){
+  watch: {
+    fontSize(newVal) {
       this.$refs.content.style.fontSize = newVal + "px";
-      this.$refs.content.style.lineHeight = newVal*1.2 + "px";
+      this.$refs.content.style.lineHeight = newVal * 1.2 + "px";
     }
   },
   methods: {
-   
     next() {
       this.getData(this.book.next);
     },
     prev() {
       this.getData(this.book.prev);
     },
-    changeBgSkin(e) {
+    changeBgSkin() {
       document.documentElement.style.setProperty(
         "--theme-background-color",
         this.bgColor
       );
     },
-    changeFontSkin(e) {
+    changeFontSkin() {
       document.documentElement.style.setProperty(
         "--theme-font-color",
         this.fontColor
@@ -102,15 +108,15 @@ export default {
   },
   mounted() {
     this.$refs.content.style.fontSize = this.fontSize + "px";
-    this.$refs.content.style.lineHeight = this.fontSize*1.2+'px';
+    this.$refs.content.style.lineHeight = this.fontSize * 1.2 + "px";
     this.$refs.content.style.letterSpacing = this.letterSpacing;
   }
 };
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .book {
   color: var(--theme-font-color);
-  background: url('/skin/skin-default.jpg');
+  background: url("/skin/skin-default.jpg");
 }
 .toolBar {
   position: fixed;
@@ -118,36 +124,36 @@ export default {
   height: 100vh;
   z-index: 10;
   top: 0;
-  .header{
+  .header {
     background: #000;
     color: #fff;
   }
-  .space{
+  .space {
     width: 100%;
-    height:calc(100vh - 140px);
+    height: calc(100vh - 140px);
   }
   .footer {
-  position: absolute;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  background: #000;
-  color: #fff;
-  .fontSizeSelect{
-    padding: 10px 0;
-  }
-  .chapter-select {
-    display: flex;
-    text-align: center;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .btn {
-    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
     background: #000;
     color: #fff;
+    .fontSizeSelect {
+      padding: 10px 0;
+    }
+    .chapter-select {
+      display: flex;
+      text-align: center;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .btn {
+      font-size: 14px;
+      background: #000;
+      color: #fff;
+    }
   }
-}
 }
 .nav {
   padding-top: 20px;
@@ -161,5 +167,4 @@ export default {
     padding: 10px 0;
   }
 }
-
 </style>

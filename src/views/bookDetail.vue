@@ -7,13 +7,17 @@
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="book">
-      <img v-lazy="decodeURIComponent(book.cover)" alt class="cover">
+      <img v-lazy="decodeURIComponent(book.cover)" alt class="cover" />
 
       <div class="book-right">
         <div class="title" v-text="book.title"></div>
         <div class="author" v-text="book.author"></div>
         <div class="codeNum" v-text="book.codeNum"></div>
-        <router-link :to="{path:'/chapter',query:{id:book.id}}" class="getChapter">全部章节</router-link>
+        <router-link
+          :to="{ path: '/chapter', query: { id: book.id } }"
+          class="getChapter"
+          >全部章节</router-link
+        >
       </div>
     </div>
     <div class="content">
@@ -49,10 +53,10 @@ export default {
   }
 };
 </script>
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .header {
-   background: #000;
-    color: #fff;
+  background: #000;
+  color: #fff;
 }
 .book {
   display: flex;
