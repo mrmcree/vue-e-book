@@ -1,6 +1,6 @@
 <template>
   <div class="categories">
-    <mt-header :title="this.$route.query.name" class="header">
+    <mt-header :title="this.$route.query.name" class="header" v-show="books.length > 0">
       <router-link to="/rank" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>

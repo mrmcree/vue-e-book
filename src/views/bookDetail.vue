@@ -1,6 +1,6 @@
 <template>
   <div id="bookDetail">
-    <mt-header :title="book.title" class="header">
+    <mt-header :title="book.title" class="header" v-show="book.title">
       <div @click="back" slot="left">
         <mt-button icon="back">返回</mt-button>
       </div>

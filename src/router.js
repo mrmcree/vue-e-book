@@ -1,40 +1,46 @@
 import Vue from "vue";
 import Router from "vue-router";
 Vue.use(Router);
-
+import home from './views/home.vue'
+import categories from './views/categories.vue'
+import rank from './views/rank.vue'
+import bookDetail from './views/bookDetail.vue'
+import book from './views/book.vue'
+// import bookDetail from './views/bookDetail.vue'
+import chapter from './views/chapter.vue'
+import about from './views/about.vue'
 export default new Router({
-  mode: "history",
+  // mode: "history",
   routes: [
     {
       path: "/",
       name: "home",
-      component: resolve => require(["./views/Home.vue"], resolve),
-      children: []
+      component: home,
     },
     {
       path: "/categories",
       name: "categories",
-      component: resolve => require(["./views/categories.vue"], resolve)
+      component: categories
     },
     {
       path: "/rank",
       name: "rank",
-      component: resolve => require(["./views/rank.vue"], resolve)
+      component: rank
     },
     {
       path: "/bookDetail",
       name: "bookDetail",
-      component: resolve => require(["./views/bookDetail.vue"], resolve)
+      component: bookDetail
     },
     {
       path: "/chapter",
       name: "chapter",
-      component: resolve => require(["./views/chapter.vue"], resolve)
+      component: chapter
     },
     {
       path: "/book",
       name: "book",
-      component: resolve => require(["./views/book.vue"], resolve)
+      component: book
     },
     {
       path: "/about",
@@ -42,8 +48,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      component: about
     }
   ]
 });

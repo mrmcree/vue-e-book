@@ -9,7 +9,7 @@ import VueLazyload from "vue-lazyload";
 import MintUI from "mint-ui";
 import "mint-ui/lib/style.css";
 Vue.prototype.$http = axios;
-Vue.prototype.$host = "http://localhost:8000/";
+Vue.prototype.$host = "http://118.25.23.201:8000/";
 Vue.config.productionTip = false;
 Vue.use(MintUI);
 Vue.use(VueLazyload, {
@@ -19,13 +19,14 @@ Vue.use(VueLazyload, {
   loading: require("../public/loading.gif"),
   attempt: 3
 });
-import { Button, Header, Range } from "mint-ui";
+import { Button, Header, Range,Loadmore  } from "mint-ui";
 new Vue({
   router,
   components: {
     Button,
     Header,
-    Range
+    Range,
+    Loadmore
   },
   store,
   render: h => h(App)
