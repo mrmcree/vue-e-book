@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Indicator, Toast } from "mint-ui";
 const baseURL = "http://118.25.23.201:8000/";
-export default ({ method, url, params }) => {
+export default ({ method = "get", url, params }) => {
   let httpDefault = {
-    method: "get",
-    url: url,
+    method,
+    url,
     baseURL,
     params: method === "get" || method === "delect" ? params : null,
     data: method === "post" || method === "put" ? JSON.stringify(params) : null,
