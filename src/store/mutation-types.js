@@ -1,2 +1,2 @@
-export const ADD_START = "ADD_START";
-export const DECREASE_START = "DECREASE_START";
+export const GET_BOOK_DETAIL = "GET_BOOK_DETAIL";
+export const CHANGE_BOOK_TITLE = "CHANGE_BOOK_TITLE";

@@ -10,7 +10,6 @@
   </div>
 </template>
 <script>
-import { Indicator } from "mint-ui";
 export default {
   name: "chapter",
   data() {
@@ -19,15 +18,9 @@ export default {
     };
   },
   beforeMount() {
-    Indicator.open({
-      text: "加载中...",
-      spinnerType: "fading-circle"
-    });
     let id = this.$route.query.id;
-    this.$http.get(`${this.$host}book-chapter/${id}`).then(res => {
+    this.$http({ url: `book-chapter/${id}` }).then(res => {
       this.chapters = res.data;
-      // console.log(this.chapters);
-      Indicator.close();
     });
   }
 };

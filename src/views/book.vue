@@ -1,26 +1,36 @@
 <template>
-  <div class="book" :style="{color:theme.color,background:theme.background}">
-    <div class="container" ref="wrapper" style="height:100vh;overflow:hidden;postion:fiex;top:0;">
+  <div
+    class="book"
+    :style="{ color: theme.color, background: theme.background }"
+  >
+    <div
+      class="container"
+      ref="wrapper"
+      style="height:100vh;overflow:hidden;postion:fiex;top:0;"
+    >
       <ul ref="content" class="wrapper">
         <li
-          v-for="(item ,index) in book"
+          v-for="(item, index) in bookDetail"
           :key="index"
-          :data-name="item.chapter+item.title"
+          :data-name="item.chapter + item.title"
           @scroll.native="chapterScroll"
         >
           <div class="nav">
             <div class="title" v-text="item.title"></div>
             <div class="chapter" v-text="item.chapter"></div>
           </div>
-          <div class="content" v-html="item.content" @click="toolBarShow = true" ref='page'></div>
+          <div
+            class="content"
+            v-html="item.content"
+            @click="toolBarShow = true"
+            ref="page"
+          ></div>
         </li>
       </ul>
-      <div id="page">
-
-      </div>
+      <div id="page"></div>
     </div>
     <div class="toolBar" v-show="toolBarShow">
-      <mt-header :title="title" class="header">
+      <mt-header :title="bookTitle" class="header">
         <div @click="$router.go(-1)" slot="left">
           <mt-button icon="back">返回</mt-button>
         </div>
@@ -39,66 +49,52 @@
           :bar-height="3"
           style="width:80%;margin:0 auto;"
         >
-          <div slot="start" @click="fontSize>10?fontSize-=5:fontSize=10">aa&nbsp;&nbsp;</div>
-          <div slot="end" @click="fontSize<50?fontSize+=5:fontSize=50">&nbsp;&nbsp;AA</div>
+          <div
+            slot="start"
+            @click="fontSize > 10 ? (fontSize -= 5) : (fontSize = 10)"
+          >
+            aa&nbsp;&nbsp;
+          </div>
+          <div
+            slot="end"
+            @click="fontSize < 50 ? (fontSize += 5) : (fontSize = 50)"
+          >
+            &nbsp;&nbsp;AA
+          </div>
         </mt-range>
         <div class="theme-select">
           <div
             class="theme"
-            v-for="(item,index) in themes"
+            v-for="(item, index) in themes"
             :key="index"
             @click="changeSkin(item)"
-          >{{index | format}}</div>
+          >
+            {{ index | format }}
+          </div>
         </div>
         <!-- <div class="chapter-select">
           <mt-button type="primary" class="btn" size="small" @click="prev">上一章</mt-button>
           <div class="pageNum">{{ book.chapter }}</div>
           <mt-button type="primary" class="btn" size="small" @click="next">下一章</mt-button>
-        </div> -->
+        </div>-->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Indicator, Toast } from "mint-ui";
+//TODO:更多换肤
 import BScroll from "better-scroll";
-var classicBg = require("../../public/skin/skin-default.jpg");
-var lightBg = require("../../public/skin/skin-light.jpg");
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "book",
   data() {
     return {
-      book: [],
-      fontColor: "",
-      bgColor: "",
       fontSize: 10,
       toolBarShow: false,
       contentScroll: undefined,
-      page: 1,
-      title: "",
       el: document.querySelectorAll(".wrapper li"),
-      themes: {
-        classic: {
-          color: "#000",
-          background: `url(${classicBg})`
-        },
-        dark: {
-          color: "#fff",
-          background: "#000"
-        },
-        light: {
-          color: "#000",
-          background: `url(${lightBg})`
-        },
-        default: {
-          color: "#000",
-          background: "#fff"
-        }
-      },
-      theme: {
-        color: "#000",
-        background: "#fff"
-      }
+      themes: {},
+      theme: {}
     };
   },
   filters: {
@@ -125,113 +121,84 @@ export default {
       document.querySelector(".container").style.lineHeight =
         newVal * 1.2 + "px";
     },
-    book(newVal) {
+    bookDetail() {
       this.el = document.querySelectorAll(".wrapper li");
     }
   },
   methods: {
     next() {
-
-      this.getData(this.book[this.book.length - 1].next);
-    
-      
+      this.getBookDetail({
+        url: this.bookDetail[this.bookDetail.length - 1].next,
+        route: this.$route
+      });
+      // this.getData();
     },
     prev() {
-      this.getData(this.book[this.book.length - 1].prev);
+      this.getBookDetail({
+        url: this.bookDetail[this.bookDetail.length - 1].prev,
+        route: this.$route
+      });
     },
     changeSkin(theme) {
       this.theme = theme;
     },
-    //, changeBgSkin() {
-    //   document.documentElement.style.setProperty(
-    //     "--theme-background-color",
-    //     this.bgColor
-    //   );
-    // },
-    // changeFontSkin() {
-    //   document.documentElement.style.setProperty(
-    //     "--theme-font-color",
-    //     this.fontColor
-    //   );
-    // },
-    getData(url) {
-      Indicator.open({
-        text: "加载中...",
-        spinnerType: "fading-circle"
-      });
-      let link = encodeURIComponent(this.$route.query.link);
-      if (url) {
-        link = encodeURIComponent(url);
-      }
-
-      this.$http.get(`${this.$host}book/${link}`).then(res => {
-        this.book.push(res.data);
-        if (this.book.length > 10) {
-          this.book = this.book.slice(1);
-        }
-
-        this.$nextTick(() => {
-          if (this.contentScroll) return;
-          if (this.title === "") this.title = this.book[0].chapter;
-          this.contentScroll = new BScroll(this.$refs.wrapper, {
-            click: true,
-            bounce: {
-              top: true,
-              bottom: true,
-              left: false,
-              right: false
-            },
-
-            pullUpLoad: {
-              // 当上拉距离超过30px时触发 pullingUp 事件
-              threshold: 30
-            }
-          });
-
-          this.contentScroll.on("scroll", pos => {
-            var top = Math.abs(pos.y);
-            var el = this.el;
-            // console.log(top);
-            for (var i = 0; i < el.length; i++) {
-              if (top > el[i].offsetTop) {
-                this.title = el[i].getAttribute("data-name");
-              }
-            }
-          });
-          this.contentScroll.on(
-            "pullingUp",
-            () => {
-              // console.log("处理上拉加载操作");
-              // var el=Document.createElement('<div>')
-              // el.className='bottom-tip'
-              // el.innerHTML='在加载'
-              //  this.$refs.content.appendChild(el)
-              setTimeout(() => {
-                // console.log("上拉加载操作");
-                // 事情做完，需要调用此方法告诉 better-scroll 数据已加载，否则上拉事件只会执行一次
-                this.next();
-                this.contentScroll.finishPullUp();
-                this.contentScroll.refresh();
-              });
-            },
-            1000
-          );
-        });
-        Indicator.close();
-      });
-    }
+    ...mapActions(["getBookDetail"]),
+    ...mapMutations({
+      changeTitle: "CHANGE_BOOK_TITLE"
+    })
   },
   beforeMount() {
-    this.getData();
+    this.theme = this.bookThemes.default;
+    this.themes = this.bookThemes;
+    this.getBookDetail({
+      route: this.$route
+    });
+  },
+  computed: {
+    ...mapGetters(["bookThemes", "bookDetail", "bookTitle"])
   },
   mounted() {
-    // $(".wrapper").turn({
-    //   acceleration: true,
-    //   width: 400,
-    //   height: 300,
-    //   autoCenter: true,
-    //   display: "single"
-    // });
+    // 滚动修改标题
+    this.$nextTick(() => {
+      if (this.contentScroll) return;
+      this.contentScroll = new BScroll(this.$refs.wrapper, {
+        click: true,
+        bounce: {
+          top: true,
+          bottom: true,
+          left: false,
+          right: false
+        },
+
+        pullUpLoad: {
+          // 当上拉距离超过30px时触发 pullingUp 事件
+          threshold: 30
+        }
+      });
+
+      this.contentScroll.on("scroll", pos => {
+        var top = Math.abs(pos.y);
+        var el = this.el;
+        for (var i = 0; i < el.length; i++) {
+          if (top > el[i].offsetTop) {
+            this.changeTitle(el[i].getAttribute("data-name"));
+          }
+        }
+      });
+      this.contentScroll.on(
+        "pullingUp",
+        () => {
+          setTimeout(() => {
+            // console.log("上拉加载操作");
+            // 事情做完，需要调用此方法告诉 better-scroll 数据已加载，否则上拉事件只会执行一次
+            this.next();
+            this.contentScroll.finishPullUp();
+            this.contentScroll.refresh();
+          });
+        },
+        1000
+      );
+    });
   }
 };
 </script>

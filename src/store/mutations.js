@@ -1,14 +1,17 @@
+//mutation 负责修改state
 import * as types from "./mutation-types";
 const mutations = {
-  [types.ADD_START](state, value) {
-    state.start++;
-  },
-  [types.DECREASE_START](state, value) {
-    if (start.start <= 0) {
-      start.start = 0;
-      return;
+  [types.GET_BOOK_DETAIL](state, value) {
+    state.book.detail.push(value);
+    if (state.book.detail.length > 10) {
+      state.book.detail = state.book.detail.slice(1);
     }
-    state.start--;
+    if (state.book.title === "")
+      state.book.title = state.book.detail[0].chapter;
+  },
+  [types.CHANGE_BOOK_TITLE](state, value) {
+    state.book.title = value;
+    // console.log(value)
   }
 };
 export default mutations;

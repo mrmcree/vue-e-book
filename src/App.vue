@@ -27,7 +27,8 @@ export default {
   padding: 0;
   margin: 0;
 }
-ul,li{
+ul,
+li {
   list-style: none;
 }
 .container {

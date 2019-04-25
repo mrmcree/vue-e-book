@@ -1,6 +1,10 @@
 <template>
   <div class="categories">
-    <mt-header :title="this.$route.query.name" class="header" v-show="books.length > 0">
+    <mt-header
+      :title="this.$route.query.name"
+      class="header"
+      v-show="books.length > 0"
+    >
       <router-link to="/rank" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
@@ -39,7 +43,6 @@
   </div>
 </template>
 <script>
-import { Indicator } from "mint-ui";
 export default {
   name: "categories",
 
@@ -64,22 +67,13 @@ export default {
       // console.log(this.books);
     },
     getData(page = 1) {
-      Indicator.open({
-        text: "加载中...",
-        spinnerType: "fading-circle"
-      });
       let { major, type } = this.$route.query;
       this.name = this.$route.query.name;
-      this.$http
-        .get(
-          `${
-            this.$host
-          }category-info?gender=${type}&type=hot&major=${major}&page=${page}`
-        )
-        .then(res => {
-          Indicator.close();
-          this.books = res.data;
-        });
+      this.$http({
+        url: `category-info?gender=${type}&type=hot&major=${major}&page=${page}`
+      }).then(res => {
+        this.books = res.data;
+      });
     }
   },
   computed: {},

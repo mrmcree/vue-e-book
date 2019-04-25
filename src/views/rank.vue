@@ -45,7 +45,6 @@
   </div>
 </template>
 <script>
-import { Indicator } from "mint-ui";
 export default {
   name: "rank",
   data() {
@@ -55,13 +54,7 @@ export default {
     };
   },
   beforeCreate() {
-    Indicator.open({
-      text: "加载中...",
-      spinnerType: "fading-circle"
-    });
-    this.$http.get(`${this.$host}category`).then(response => {
-      Indicator.close();
-      // console.log(response);
+    this.$http({ url: "category" }).then(response => {
       this.female = response.data.female;
       this.male = response.data.male;
     });

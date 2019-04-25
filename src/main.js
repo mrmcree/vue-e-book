@@ -4,12 +4,11 @@ import router from "./router";
 import store from "./store/store";
 import "lib-flexible";
 import "normalize.css";
-import axios from "axios";
 import VueLazyload from "vue-lazyload";
 import MintUI from "mint-ui";
 import "mint-ui/lib/style.css";
-Vue.prototype.$http = axios;
-Vue.prototype.$host = "http://118.25.23.201:8000/";
+import http from "./api/http";
+Vue.prototype.$http = http;
 Vue.config.productionTip = false;
 Vue.use(MintUI);
 Vue.use(VueLazyload, {
@@ -19,7 +18,7 @@ Vue.use(VueLazyload, {
   loading: require("../public/loading.gif"),
   attempt: 3
 });
-import { Button, Header, Range,Loadmore  } from "mint-ui";
+import { Button, Header, Range, Loadmore } from "mint-ui";
 new Vue({
   router,
   components: {

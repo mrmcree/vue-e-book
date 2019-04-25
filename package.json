@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-plugin-component": "^1.1.1",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "better-scroll": "^1.15.2",
